@@ -54,7 +54,7 @@ public class circularLL {
     }
 
     static void arrayFy(cNode[] arr, cNode node, int startIndex) {
-        // Only will use if array is used instead of a linked list.
+        // Only will use if array is used instead of an Array list.
     }
 
     static cNode indexInsertion(cNode header, int value, String message, ArrayList<cNode> arr, int index) {
