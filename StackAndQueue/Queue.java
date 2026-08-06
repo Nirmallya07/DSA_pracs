@@ -24,12 +24,12 @@ public class Queue {
     public void display() {
         int n = size();
         System.out.print("Front--> ");
-        for(int i = 0; i < size(); i++) {
+        for(int i = 0; i < n; i++) {
             System.out.print(arr[i] + " ");
         }
         System.out.print(" -->Rear\n");
     }
-    public void queue(int value) {
+    public void enqueue(int value) {
         if (isFull()) throw new IllegalStateException("\"Queue Overflow\"");
         arr[++last] = value;
     }
@@ -44,11 +44,11 @@ public class Queue {
 
     public static void main(String[] args) {
         Queue queue = new Queue(5);
-        queue.queue(3);
-        queue.queue(4);
-        queue.queue(5);
-        queue.queue(10);
-        queue.queue(2);
+        queue.enqueue(3);
+        queue.enqueue(4);
+        queue.enqueue(5);
+        queue.enqueue(10);
+        queue.enqueue(2);
         queue.display();
         System.out.println(queue.dequeue());
         System.out.println(queue.dequeue());
@@ -56,7 +56,7 @@ public class Queue {
         queue.display();
         System.out.println(queue.dequeue());
         System.out.println(queue.dequeue());
-        queue.queue(33);
+        queue.enqueue(33);
         queue.display();
         System.out.println(queue.dequeue());
         System.out.println(queue.dequeue());
