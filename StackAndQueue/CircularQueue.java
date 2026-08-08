@@ -6,7 +6,8 @@ public class CircularQueue {
     // May not be optimal.
 
     private int[] arr;
-    private int capacity, front, rear, size;
+    private final int capacity;
+    private int front, rear, size;
 
     public CircularQueue(int arrayLength) {
         capacity = arrayLength;
@@ -42,14 +43,25 @@ public class CircularQueue {
         size++;
     }
 
+    // Previously my code was logically correct and works but GPT advised
+    // to practice this style to prevent inconsistency. So whenever the queue
+    // gets empty, the dequeue() already makes front = rear = -1.
+    // So enqueue() doesn't have to make it again, though it makes
+    // for now which is actually useless.
     public int dequeue() {
         if (isEmpty()) {
-            rear = front = -1;
             throw new IllegalStateException("Queue Underflow");
         }
+
         int res = arr[front];
-        front = (front+1) % capacity;
         size--;
+
+        if (size == 0) {
+            front = rear = -1;
+        } else {
+            front = (front + 1) % capacity;
+        }
+
         return res;
     }
 
