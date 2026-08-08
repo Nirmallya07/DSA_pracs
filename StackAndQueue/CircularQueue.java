@@ -48,6 +48,7 @@ public class CircularQueue {
     // gets empty, the dequeue() already makes front = rear = -1.
     // So enqueue() doesn't have to make it again, though it makes
     // for now which is actually useless.
+
     public int dequeue() {
         if (isEmpty()) {
             throw new IllegalStateException("Queue Underflow");
