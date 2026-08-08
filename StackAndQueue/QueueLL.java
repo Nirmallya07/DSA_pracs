@@ -1,4 +1,4 @@
-//Gpt Rating = 9.3
+//Gpt Rating = 9.7
 package StackAndQueue;
 
 public class QueueLL {
@@ -42,6 +42,7 @@ public class QueueLL {
         Node res = front;
         front = front.next;
         size--;
+        if(front == null) rear = null;
         return res;
     }
 
