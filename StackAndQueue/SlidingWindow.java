@@ -1,3 +1,4 @@
+// GPT Rating : 9.5
 package StackAndQueue;
 
 class Circular_Queue {
