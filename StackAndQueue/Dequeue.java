@@ -31,7 +31,7 @@ class TraverseQueue {
     }
 }
 
-public class Dequeue extends TraverseQueue {
+public class Dequeue {
     private int front, back, size;
     private int[] arr;
     private final int capacity;
@@ -41,6 +41,7 @@ public class Dequeue extends TraverseQueue {
         capacity = arrayCapacity;
         front = back = -1;
         size = 0;
+
     }
 
     public int getFront() {
@@ -59,8 +60,10 @@ public class Dequeue extends TraverseQueue {
         return arr.clone();
     }
 
+    // This is called composition.
+    private TraverseQueue traverser = new TraverseQueue();
     public void callTraverse() {
-        traverse(front, back, getArr());
+        traverser.traverse(front, back, getArr());
     }
 
     private boolean isEmpty() {
