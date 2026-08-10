@@ -1,4 +1,5 @@
 package StackAndQueue;
 
-public class FirstNegativeIntegerintheWindow {
+public class FirstNegativeIntegerInTheWindow {
+    
 }
