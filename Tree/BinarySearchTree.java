@@ -40,11 +40,11 @@ public class BinarySearchTree {
         }
     }
 
-    public void traverse(Node node) {
+    public void preorderTraverse(Node node) {
         if(node == null) return;
         System.out.println(node.value);
-        traverse(node.left);
-        traverse(node.right);
+        preorderTraverse(node.left);
+        preorderTraverse(node.right);
     }
     public Node findNode(Node node, int value) {
         if (node == null) return null;
@@ -133,7 +133,7 @@ public class BinarySearchTree {
         binaryTree.insertNode(10);
         binaryTree.insertNode(14);
         binaryTree.insertNode(9);
-        binaryTree.traverse(binaryTree.root);
+        binaryTree.preorderTraverse(binaryTree.root);
         System.out.println("---------------------------------------");
         Node res = binaryTree.findNode(binaryTree.root, 10);
         System.out.println(res.value);
@@ -146,6 +146,6 @@ public class BinarySearchTree {
         System.out.println(binaryTree.inorderSuccessor(binaryTree.findNode(binaryTree.root, 5)).value);
         binaryTree.deleteNode(5);
         System.out.println("After deletion of the node.....");
-        binaryTree.traverse(binaryTree.root);
+        binaryTree.preorderTraverse(binaryTree.root);
     }
 }
