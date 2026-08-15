@@ -107,15 +107,24 @@ public class BinarySearchTree {
         else return findImmediateParentNode(node.left, value);
     }
 
-    public Node[] findSiblings(Node root, int value) {
-        if(root.value < value) return findSiblings(root.right, value);
-        else if(root.value > value) return findSiblings(root.left, value);
+    public Node[] findChildren(Node root, int value) {
+        if(root == null) return null;
+        if(root.value < value) return findChildren(root.right, value);
+        else if(root.value > value) return findChildren(root.left, value);
         else {
             Node[] nodeArr = new Node[2];
             nodeArr[0] = root.left;
             nodeArr[1] = root.right;
             return nodeArr;
         }
+    }
+
+    public Node findSibling(Node root, int value) {
+        Node parent = findImmediateParentNode(root, value);
+        // value == root, parent is null
+        if(parent == null) return null;
+        if(parent.left != null && parent.left.value == value) return parent.right;
+        return parent.left;
     }
 
     public Node findSmallestNode(Node node) {
@@ -260,11 +269,12 @@ public class BinarySearchTree {
 
         int[] arr = {10, 8, 14, 3};
         for ( int i = 0; i < arr.length; i++) {
-            Node[] nodeArr = binaryTree.findSiblings(binaryTree.root, arr[i]);
-            System.out.print("The siblings of " + arr[i] + ": ");
+            Node[] nodeArr = binaryTree.findChildren(binaryTree.root, arr[i]);
+            System.out.print("The children of " + arr[i] + ": ");
             System.out.print(nodeArr[0] != null ? nodeArr[0].value : nodeArr[0]);
             System.out.print(" and ");
             System.out.println(nodeArr[1] != null ? nodeArr[1].value : nodeArr[1]);
         }
+        System.out.println(binaryTree.findSibling(binaryTree.root, 10).value);
     }
 }
