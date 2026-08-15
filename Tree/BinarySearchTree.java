@@ -126,6 +126,11 @@ public class BinarySearchTree {
         }
     }
 
+    public boolean contains(int value) {
+        Node node = findNode(root, value);
+        return node == null ? false : true;
+    }
+
     public void deleteNodeBST(int value) {
         root = deleteNode(root, value);
     }
@@ -177,8 +182,11 @@ public class BinarySearchTree {
         System.out.println(binaryTree.inorderSuccessor(binaryTree.root).value);
         System.out.println(binaryTree.inorderSuccessor(binaryTree.findNode(binaryTree.root, 5)).value);
 //        binaryTree.deleteNode(5);
+        System.out.println(binaryTree.contains(5));
         binaryTree.deleteNodeBST(5);
         System.out.println("After deletion of the node.....");
         binaryTree.preorderTraverse(binaryTree.root);
+        boolean a = binaryTree.contains(5);
+        System.out.println(a);
     }
 }
