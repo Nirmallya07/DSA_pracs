@@ -89,6 +89,7 @@ public class BinarySearchTree {
         node = node.left;
         return findLargestNode(node);
     }
+    // My Approach. After learning the theoretical concept.
     public void deleteNode(int value) {
 
         Node node = findNode(root, value);
@@ -125,6 +126,37 @@ public class BinarySearchTree {
         }
     }
 
+    public void deleteNodeBST(int value) {
+        root = deleteNode(root, value);
+    }
+
+    private Node deleteNode(Node root, int value) {
+        if(root == null) return root;
+        if(root.value > value) root.left = deleteNode(root.left, value);
+        else if(root.value < value) root.right = deleteNode(root.right, value);
+        else { // root.value == value , the node to delete is found.
+
+            // leaf node or node with one child
+            if(root.right == null) return root.left;
+            if(root.left == null) return root.right;
+            // node to delete has 2 children
+            Node successor = getSuccessor(root.right);
+            root.value = successor.value;
+            root.right = deleteNode(root.right, successor.value);
+        }
+        return root;
+    }
+
+    private Node getSuccessor(Node node) {
+        if(node == null) return node;
+        while(node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+
+
+
     public static void main(String[] args) {
         BinarySearchTree binaryTree = new BinarySearchTree();
         binaryTree.insertNode(3);
@@ -144,7 +176,8 @@ public class BinarySearchTree {
         System.out.println(binaryTree.findSmallestNode(binaryTree.findNode(binaryTree.root, 10)).value);
         System.out.println(binaryTree.inorderSuccessor(binaryTree.root).value);
         System.out.println(binaryTree.inorderSuccessor(binaryTree.findNode(binaryTree.root, 5)).value);
-        binaryTree.deleteNode(5);
+//        binaryTree.deleteNode(5);
+        binaryTree.deleteNodeBST(5);
         System.out.println("After deletion of the node.....");
         binaryTree.preorderTraverse(binaryTree.root);
     }
