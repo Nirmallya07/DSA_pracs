@@ -257,5 +257,14 @@ public class BinarySearchTree {
         boolean a = binaryTree.contains(5);
         System.out.println(a);
         binaryTree.levelOrder(binaryTree.root);
+
+        int[] arr = {10, 8, 14, 3};
+        for ( int i = 0; i < arr.length; i++) {
+            Node[] nodeArr = binaryTree.findSiblings(binaryTree.root, arr[i]);
+            System.out.print("The siblings of " + arr[i] + ": ");
+            System.out.print(nodeArr[0] != null ? nodeArr[0].value : nodeArr[0]);
+            System.out.print(" and ");
+            System.out.println(nodeArr[1] != null ? nodeArr[1].value : nodeArr[1]);
+        }
     }
 }
