@@ -1,5 +1,7 @@
 package Tree;
 
+import java.util.ArrayDeque;
+
 public class BinarySearchTree {
 
     private Node root;
@@ -42,10 +44,53 @@ public class BinarySearchTree {
 
     public void preorderTraverse(Node node) {
         if(node == null) return;
-        System.out.println(node.value);
+        System.out.println("Preorder: " + node.value);
         preorderTraverse(node.left);
         preorderTraverse(node.right);
     }
+
+    public void inorderTraverse(Node root) {
+        if(root == null) return;
+        inorderTraverse(root.left);
+        System.out.println("Inorder/Ascending: " + root.value);
+        inorderTraverse(root.right);
+    }
+
+    public void postorderTraverse(Node root) {
+        if(root == null) return;
+        postorderTraverse(root.left);
+        postorderTraverse(root.right);
+        System.out.println("Postorder: " + root.value);
+    }
+
+    public void levelOrder(Node node) {
+        if(node == null) return;
+        ArrayDeque<Node> queue = new ArrayDeque<>();
+        queue.offer(node);
+        levelOrderPrivate(queue);
+    }
+
+    private void levelOrderPrivate(ArrayDeque<Node> queue) {
+        // Done by own
+        if(queue.isEmpty()) return;
+        Node poll = queue.poll();
+        System.out.println(poll.value);
+        if(poll.left != null) queue.offer(poll.left);
+        if(poll.right != null) queue.offer(poll.right);
+        levelOrderPrivate(queue);
+    }
+
+    public void ascendingOrder(Node node) {
+        inorderTraverse(node);
+    }
+
+    public void descendingOrder(Node node) {
+        if(node == null) return;
+        descendingOrder(node.right);
+        System.out.println("Descending :" + node.value);
+        descendingOrder(node.left);
+    }
+
     public Node findNode(Node node, int value) {
         if (node == null) return null;
         else if (node.value == value) return node;
@@ -60,6 +105,17 @@ public class BinarySearchTree {
         else if(node.left != null && node.left.value == value) return node;
         else if(node.value < value) return findImmediateParentNode(node.right, value);
         else return findImmediateParentNode(node.left, value);
+    }
+
+    public Node[] findSiblings(Node root, int value) {
+        if(root.value < value) return findSiblings(root.right, value);
+        else if(root.value > value) return findSiblings(root.left, value);
+        else {
+            Node[] nodeArr = new Node[2];
+            nodeArr[0] = root.left;
+            nodeArr[1] = root.right;
+            return nodeArr;
+        }
     }
 
     public Node findSmallestNode(Node node) {
@@ -89,6 +145,7 @@ public class BinarySearchTree {
         node = node.left;
         return findLargestNode(node);
     }
+
     // My Approach. After learning the theoretical concept.
     public void deleteNode(int value) {
 
@@ -168,6 +225,10 @@ public class BinarySearchTree {
         binaryTree.insertNode(5);
         binaryTree.insertNode(2);
         binaryTree.insertNode(10);
+        binaryTree.insertNode(1);
+        binaryTree.insertNode(4);
+        binaryTree.insertNode(8);
+        binaryTree.insertNode(7);
         binaryTree.insertNode(14);
         binaryTree.insertNode(9);
         binaryTree.preorderTraverse(binaryTree.root);
@@ -183,10 +244,18 @@ public class BinarySearchTree {
         System.out.println(binaryTree.inorderSuccessor(binaryTree.findNode(binaryTree.root, 5)).value);
 //        binaryTree.deleteNode(5);
         System.out.println(binaryTree.contains(5));
+        binaryTree.inorderTraverse(binaryTree.root);
+        binaryTree.preorderTraverse(binaryTree.root);
+        binaryTree.postorderTraverse(binaryTree.root);
+        binaryTree.ascendingOrder(binaryTree.root);
+        binaryTree.descendingOrder(binaryTree.root);
+        binaryTree.levelOrder(binaryTree.root);;
+
         binaryTree.deleteNodeBST(5);
         System.out.println("After deletion of the node.....");
         binaryTree.preorderTraverse(binaryTree.root);
         boolean a = binaryTree.contains(5);
         System.out.println(a);
+        binaryTree.levelOrder(binaryTree.root);
     }
 }

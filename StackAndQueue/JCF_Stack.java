@@ -13,6 +13,6 @@ public class JCF_Stack {
         System.out.println(stack);
         System.out.println(stack.search(5)); // 1 (from top : 1 pos (1-index based))
         stack.push(22);
-        System.out.println(stack.search(5));// 2 ( Now 5 is at 2 pos from top)
+        System.out.println(stack.search(5));// 2 ( Now 5 is at 2 pos from top) 
     }
 }
