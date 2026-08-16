@@ -141,18 +141,33 @@ public class BinarySearchTree {
         }
         return node;
     }
-    public Node inorderSuccessor(Node node) {
-        if(node == null) return null;
-        if (node.right == null) return null;
-        node = node.right;
-        return findSmallestNode(node);
 
+    public Node inorderSuccessor(Node root, int value) {
+        Node successor = null;
+        if(root == null) return root;
+        while(root.value != value) {
+            if (root.value > value) {
+                successor = root;
+                root = root.left;
+            } else if(root.value < value) root = root.right;
+            if(root == null) return null;
+        }
+        if(root.right != null) successor = findSmallestNode(root.right);
+        return successor;
     }
-    public Node inorderPredecessor(Node node) {
-        if(node == null) return null;
-        if(node.left == null) return null;
-        node = node.left;
-        return findLargestNode(node);
+
+    public Node inorderPredecessor(Node node, int value) {
+        Node predecessor = null;
+        if(root == null) return root;
+        while(root.value != value) {
+            if (root.value < value) {
+                predecessor = root;
+                root = root.right;
+            } else if(root.value > value) root = root.left;
+            if(root == null) return null;
+        }
+        if(root.left != null) predecessor = findLargestNode(root.left);
+        return predecessor;
     }
 
     // My Approach. After learning the theoretical concept.
@@ -176,7 +191,7 @@ public class BinarySearchTree {
             return;
         }
 
-        Node res = node.right == null ? inorderPredecessor(node) : inorderSuccessor(node);
+        Node res = node.right == null ? inorderPredecessor(node, node.value) : inorderSuccessor(node, node.value);
 
         Node parent = findImmediateParentNode(node, res.value);
         node.value = res.value;
@@ -201,6 +216,7 @@ public class BinarySearchTree {
         root = deleteNode(root, value);
     }
 
+    // Optimized after learning from GFG
     private Node deleteNode(Node root, int value) {
         if(root == null) return root;
         if(root.value > value) root.left = deleteNode(root.left, value);
@@ -249,8 +265,8 @@ public class BinarySearchTree {
         System.out.println(binaryTree.findSmallestNode(binaryTree.root).value);
         System.out.println(binaryTree.findSmallestNode(binaryTree.findNode(binaryTree.root, 5)).value);
         System.out.println(binaryTree.findSmallestNode(binaryTree.findNode(binaryTree.root, 10)).value);
-        System.out.println(binaryTree.inorderSuccessor(binaryTree.root).value);
-        System.out.println(binaryTree.inorderSuccessor(binaryTree.findNode(binaryTree.root, 5)).value);
+        System.out.println(binaryTree.inorderSuccessor(binaryTree.root, binaryTree.root.value).value);
+        System.out.println(binaryTree.inorderSuccessor(binaryTree.findNode(binaryTree.root, 5), 10).value);
 //        binaryTree.deleteNode(5);
         System.out.println(binaryTree.contains(5));
         binaryTree.inorderTraverse(binaryTree.root);
@@ -276,5 +292,12 @@ public class BinarySearchTree {
             System.out.println(nodeArr[1] != null ? nodeArr[1].value : nodeArr[1]);
         }
         System.out.println(binaryTree.findSibling(binaryTree.root, 10).value);
+        System.out.println(binaryTree.inorderSuccessor(binaryTree.root, 4).value);
+        binaryTree.deleteNodeBST(3);
+//        System.out.println(binaryTree.inorderSuccessor(binaryTree.root, 3).value);
+        binaryTree.deleteNodeBST(9);
+        binaryTree.insertNode(6);
+        System.out.println(binaryTree.inorderPredecessor(binaryTree.root,7).value);
+        System.out.println(binaryTree.inorderSuccessor(binaryTree.root, 7).value);
     }
 }
