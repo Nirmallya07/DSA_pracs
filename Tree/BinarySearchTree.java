@@ -156,7 +156,7 @@ public class BinarySearchTree {
         return successor;
     }
 
-    public Node inorderPredecessor(Node node, int value) {
+    public Node inorderPredecessor(Node root, int value) {
         Node predecessor = null;
         if(root == null) return root;
         while(root.value != value) {
@@ -210,6 +210,11 @@ public class BinarySearchTree {
     public boolean contains(int value) {
         Node node = findNode(root, value);
         return node == null ? false : true;
+    }
+
+    public int size(Node root) {
+        if(root == null) return 0;
+        return 1 + size(root.left) + size(root.right);
     }
 
     public void deleteNodeBST(int value) {
@@ -291,6 +296,7 @@ public class BinarySearchTree {
             System.out.print(" and ");
             System.out.println(nodeArr[1] != null ? nodeArr[1].value : nodeArr[1]);
         }
+        System.out.println(binaryTree.size(binaryTree.root));
         System.out.println(binaryTree.findSibling(binaryTree.root, 10).value);
         System.out.println(binaryTree.inorderSuccessor(binaryTree.root, 4).value);
         binaryTree.deleteNodeBST(3);
@@ -299,5 +305,6 @@ public class BinarySearchTree {
         binaryTree.insertNode(6);
         System.out.println(binaryTree.inorderPredecessor(binaryTree.root,7).value);
         System.out.println(binaryTree.inorderSuccessor(binaryTree.root, 7).value);
+        System.out.println(binaryTree.size(binaryTree.root));
     }
 }
