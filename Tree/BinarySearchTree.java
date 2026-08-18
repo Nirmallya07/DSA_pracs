@@ -251,6 +251,10 @@ public class BinarySearchTree {
         return 1 + calculateBSTSize(root.left) + calculateBSTSize(root.right);
     }
 
+    public int getSize() {
+        return size;
+    }
+
     int calcIntLog(int value) {
         int count = 0;
         while(value != 0) {
