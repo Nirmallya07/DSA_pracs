@@ -5,6 +5,7 @@ import java.util.ArrayDeque;
 public class BinarySearchTree {
 
     private Node root;
+    private int size; // Will work on it later
 
     private class Node {
         int value;
@@ -21,6 +22,7 @@ public class BinarySearchTree {
         Node newNode = new Node(value, null, null);
         if(root == null) {
             root = newNode;
+            size = 1;
             return;
         }
         Node currNode = root;
@@ -28,6 +30,7 @@ public class BinarySearchTree {
             if(value <= currNode.value) {
                 if(currNode.left == null) {
                     currNode.left = newNode;
+                    size++;
                     return;
                 }
                 currNode = currNode.left;
@@ -35,6 +38,7 @@ public class BinarySearchTree {
             else {
                 if(currNode.right == null) {
                     currNode.right = newNode;
+                    size++;
                     return;
                 }
                 currNode = currNode.right;
@@ -212,13 +216,65 @@ public class BinarySearchTree {
         return node == null ? false : true;
     }
 
-    public int size(Node root) {
+    public boolean validateBST(Node root) {
+        return privateValidateBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean privateValidateBST(Node root, long min, long max) {
+        if (root == null) return true;
+        if(root.value <= min || max < root.value) return false;
+        return privateValidateBST(root.left, min, root.value) && privateValidateBST(root.right, root.value, max);
+    }
+
+    public Node lowestCommonAncestor(Node root, int val1, int val2) {
+        if((root.value == val1) || (root.value == val2))
+            return root;
+        if(val1 == val2)
+            return findNode(root, val1);
+        if(!(contains(val1) && contains(val2)))
+            throw new IllegalArgumentException("At least either of the nodes values are not present in the BST.");
+        Node commonAncestor = root;
+        while(commonAncestor.left != null && commonAncestor.right != null) {
+            if (val1 <= commonAncestor.value && val2 <= commonAncestor.value) {
+                commonAncestor = commonAncestor.left;
+            } else if (val1 > commonAncestor.value && val2 >= commonAncestor.value) {
+                commonAncestor = commonAncestor.right;
+            } else {
+                break;
+            }
+        }
+        return commonAncestor;
+    }
+
+    public int calculateBSTSize(Node root) {
         if(root == null) return 0;
-        return 1 + size(root.left) + size(root.right);
+        return 1 + calculateBSTSize(root.left) + calculateBSTSize(root.right);
+    }
+
+    int calcIntLog(int value) {
+        int count = 0;
+        while(value != 0) {
+            value = value/2;
+            count++;
+        }
+        return count;
+    }
+    public int minimumLevelsForCompleteTree(Node root) {
+        // Works only for a complete tree, returns the number of levels.
+        int size = calculateBSTSize(root);
+        return calcIntLog(size);
+    }
+    public int heightBST(Node node) {
+        // height is the number of edges at the longest part in the BST
+        // levels = height + 1
+        // height = level - 1
+        if(node == null) return -1;
+        return 1 + Math.max(heightBST(node.left), heightBST(node.right));
     }
 
     public void deleteNodeBST(int value) {
         root = deleteNode(root, value);
+
     }
 
     // Optimized after learning from GFG
@@ -229,8 +285,14 @@ public class BinarySearchTree {
         else { // root.value == value , the node to delete is found.
 
             // leaf node or node with one child
-            if(root.right == null) return root.left;
-            if(root.left == null) return root.right;
+            if(root.right == null) {
+                size--;
+                return root.left;
+            }
+            if(root.left == null) {
+                size--;
+                return root.right;
+            }
             // node to delete has 2 children
             Node successor = getSuccessor(root.right);
             root.value = successor.value;
@@ -296,7 +358,7 @@ public class BinarySearchTree {
             System.out.print(" and ");
             System.out.println(nodeArr[1] != null ? nodeArr[1].value : nodeArr[1]);
         }
-        System.out.println(binaryTree.size(binaryTree.root));
+        System.out.println(binaryTree.calculateBSTSize(binaryTree.root));
         System.out.println(binaryTree.findSibling(binaryTree.root, 10).value);
         System.out.println(binaryTree.inorderSuccessor(binaryTree.root, 4).value);
         binaryTree.deleteNodeBST(3);
@@ -305,6 +367,15 @@ public class BinarySearchTree {
         binaryTree.insertNode(6);
         System.out.println(binaryTree.inorderPredecessor(binaryTree.root,7).value);
         System.out.println(binaryTree.inorderSuccessor(binaryTree.root, 7).value);
-        System.out.println(binaryTree.size(binaryTree.root));
+        System.out.println(binaryTree.calculateBSTSize(binaryTree.root));
+//        System.out.println(binaryTree.minimumLevelsForCompleteTree(binaryTree.root));
+        System.out.println(binaryTree.heightBST(binaryTree.root));
+        System.out.println(binaryTree.validateBST(binaryTree.root));
+        try {
+            System.out.println(binaryTree.lowestCommonAncestor(binaryTree.root, 1, 5).value);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid Argument");
+            System.out.println(e);
+        }
     }
 }
