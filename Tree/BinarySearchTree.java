@@ -5,7 +5,7 @@ import java.util.ArrayDeque;
 public class BinarySearchTree {
 
     private Node root;
-    private int size; // Will work on it later
+    private int size;
 
     private class Node {
         int value;
