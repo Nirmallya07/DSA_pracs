@@ -275,10 +275,49 @@ public class BinarySearchTree {
         if(node == null) return -1;
         return 1 + Math.max(heightBST(node.left), heightBST(node.right));
     }
+    private int count;
+    public Node KthSmallestElement(Node root, int count) {
+        if(count > size || count < 1) {
+            throw new IllegalArgumentException("Count value can't be greater than or less than size of BST.");
+        }
+        this.count = count;
+        return privateKthSmallestElement(root);
+    }
+    private Node privateKthSmallestElement(Node root) {
+        if(root == null) return null;
+        Node res = privateKthSmallestElement(root.left);
+        if(count == 1) {
+            count = -1;
+            return root;
+        }
+        else if(count == -1) return res;
+        count--;
+        res = privateKthSmallestElement(root.right);
+        return res;
+    }
+
+    public Node KthLargestElement(Node root, int count) {
+        if(count > size || count < 1) {
+            throw new IllegalArgumentException("Count value can't be greater than or less than size of BST.");
+        }
+        this.count = count;
+        return privateKthLargestElement(root);
+    }
+    private Node privateKthLargestElement(Node root) {
+        if(root == null) return null;
+        Node res = privateKthLargestElement(root.right);
+        if(count == 1) {
+            count = -1;
+            return root;
+        }
+        else if(count == -1) return res;
+        count--;
+        res = privateKthLargestElement(root.left);
+        return res;
+    }
 
     public void deleteNodeBST(int value) {
         root = deleteNode(root, value);
-
     }
 
     // Optimized after learning from GFG
@@ -345,7 +384,8 @@ public class BinarySearchTree {
         binaryTree.postorderTraverse(binaryTree.root);
         binaryTree.ascendingOrder(binaryTree.root);
         binaryTree.descendingOrder(binaryTree.root);
-        binaryTree.levelOrder(binaryTree.root);;
+        binaryTree.levelOrder(binaryTree.root);
+        ;
 
         binaryTree.deleteNodeBST(5);
         System.out.println("After deletion of the node.....");
@@ -355,7 +395,7 @@ public class BinarySearchTree {
         binaryTree.levelOrder(binaryTree.root);
 
         int[] arr = {10, 8, 14, 3};
-        for ( int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             Node[] nodeArr = binaryTree.findChildren(binaryTree.root, arr[i]);
             System.out.print("The children of " + arr[i] + ": ");
             System.out.print(nodeArr[0] != null ? nodeArr[0].value : nodeArr[0]);
@@ -369,14 +409,17 @@ public class BinarySearchTree {
 //        System.out.println(binaryTree.inorderSuccessor(binaryTree.root, 3).value);
         binaryTree.deleteNodeBST(9);
         binaryTree.insertNode(6);
-        System.out.println(binaryTree.inorderPredecessor(binaryTree.root,7).value);
+        System.out.println(binaryTree.inorderPredecessor(binaryTree.root, 7).value);
         System.out.println(binaryTree.inorderSuccessor(binaryTree.root, 7).value);
         System.out.println(binaryTree.calculateBSTSize(binaryTree.root));
 //        System.out.println(binaryTree.minimumLevelsForCompleteTree(binaryTree.root));
         System.out.println(binaryTree.heightBST(binaryTree.root));
         System.out.println(binaryTree.validateBST(binaryTree.root));
         try {
-            System.out.println(binaryTree.lowestCommonAncestor(binaryTree.root, 1, 5).value);
+            System.out.println(binaryTree.lowestCommonAncestor(binaryTree.root, 6, 10).value);
+            System.out.println("Size: " + binaryTree.getSize());
+            System.out.println(binaryTree.KthSmallestElement(binaryTree.root, 5).value);
+            System.out.println(binaryTree.KthLargestElement(binaryTree.root, 3).value);
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid Argument");
             System.out.println(e);
