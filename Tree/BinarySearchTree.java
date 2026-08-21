@@ -321,19 +321,33 @@ public class BinarySearchTree {
 
     public Node floorNode(Node root, int value) {
         if(root == null) return null;
-        Node floor = null, res = null;
+        Node floor, candidate = null;
         if(root.value == value) return root;
         else if(root.value > value) {
             floor = floorNode(root.left, value);
         }
         else {
-            res = root;
+            candidate = root;
             floor = floorNode(root.right, value);
         }
-        if(floor == null) return res;
+        if(floor == null) return candidate;
         else return floor;
     }
 
+    public Node ceilNode(Node root, int value) {
+        if(root == null) return null;
+        Node ceil, candidate = null;
+        if(root.value == value) return root;
+        else if(root.value < value) {
+            ceil = ceilNode(root.right, value);
+        }
+        else {
+            candidate = root;
+            ceil = ceilNode(root.left, value);
+        }
+        if(ceil == null) return candidate;
+        else return ceil;
+    }
 
 
     public void deleteNodeBST(int value) {
@@ -440,7 +454,8 @@ public class BinarySearchTree {
             System.out.println("Size: " + binaryTree.getSize());
             System.out.println(binaryTree.KthSmallestElement(binaryTree.root, 5).value);
             System.out.println(binaryTree.KthLargestElement(binaryTree.root, 3).value);
-            System.out.println(binaryTree.floorNode(binaryTree.root, 10).value);
+            System.out.println(binaryTree.floorNode(binaryTree.root, 9).value);
+            System.out.println(binaryTree.ceilNode(binaryTree.root, 9).value);
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid Argument");
             System.out.println(e);
