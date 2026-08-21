@@ -349,6 +349,16 @@ public class BinarySearchTree {
         else return ceil;
     }
 
+    public void rangeSearch(Node root, int low, int high) {
+        if(root == null) return;
+        if(root.value > low) rangeSearch(root.left, low, high);
+        if(low <= root.value && root.value <= high) System.out.println(root.value);
+        if(root.value < high) rangeSearch(root.right, low, high);
+    }
+    public int rangeSum(Node root, int low, int high) {
+        return -1; // Incomplete
+    }
+
 
     public void deleteNodeBST(int value) {
         root = deleteNode(root, value);
@@ -462,5 +472,7 @@ public class BinarySearchTree {
         } catch (NullPointerException e) {
             System.out.println("Null Pointer Exception Caught.");
         }
+        System.out.println("Range Search -----");
+        binaryTree.rangeSearch(binaryTree.root, 5, 10);
     }
 }
