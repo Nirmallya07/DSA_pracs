@@ -263,11 +263,13 @@ public class BinarySearchTree {
         }
         return count;
     }
+
     public int minimumLevelsForCompleteTree(Node root) {
         // Works only for a complete tree, returns the number of levels.
         int size = calculateBSTSize(root);
         return calcIntLog(size);
     }
+
     public int heightBST(Node node) {
         // height is the number of edges at the longest part in the BST
         // levels = height + 1
@@ -275,6 +277,7 @@ public class BinarySearchTree {
         if(node == null) return -1;
         return 1 + Math.max(heightBST(node.left), heightBST(node.right));
     }
+
     private int count;
     public Node KthSmallestElement(Node root, int count) {
         if(count > size || count < 1) {
@@ -315,6 +318,23 @@ public class BinarySearchTree {
         res = privateKthLargestElement(root.left);
         return res;
     }
+
+    public Node floorNode(Node root, int value) {
+        if(root == null) return null;
+        Node floor = null, res = null;
+        if(root.value == value) return root;
+        else if(root.value > value) {
+            floor = floorNode(root.left, value);
+        }
+        else {
+            res = root;
+            floor = floorNode(root.right, value);
+        }
+        if(floor == null) return res;
+        else return floor;
+    }
+
+
 
     public void deleteNodeBST(int value) {
         root = deleteNode(root, value);
@@ -420,9 +440,12 @@ public class BinarySearchTree {
             System.out.println("Size: " + binaryTree.getSize());
             System.out.println(binaryTree.KthSmallestElement(binaryTree.root, 5).value);
             System.out.println(binaryTree.KthLargestElement(binaryTree.root, 3).value);
+            System.out.println(binaryTree.floorNode(binaryTree.root, 10).value);
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid Argument");
             System.out.println(e);
+        } catch (NullPointerException e) {
+            System.out.println("Null Pointer Exception Caught.");
         }
     }
 }
